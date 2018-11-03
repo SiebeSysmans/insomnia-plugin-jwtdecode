@@ -1,6 +1,6 @@
 {
 	"name": "insomnia-plugin-jwtdecode",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"author": "Siebe Sysmans <siebe.sysmans@gmail.com>",
 	"description": "JWT (JSON Web Token) decoder for Insomnia REST Client",
 	"license": "MIT",
