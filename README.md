@@ -1,6 +1,8 @@
 # JWT (JSON Web Token) decoder for Insomnia REST Client
 
-This is a plugin for the [Insomnia REST client](https://insomnia.rest/) to decode the **Header** or **Payload** part of a [JWT (JSON WebToken)](https://jwt.io/) and return the value of a claim in that part.
+This is a plugin for the [Insomnia REST client](https://insomnia.rest/) to decode the **Header** or **Payload** part of a [JWT (JSON WebToken)](https://jwt.io/), return the value of a claim in that part and use it as a dynamic variable.
+
+**This plugin is not for encoding,constructing,validating, ... or other usages for JWT tokens.**
 
 ## Decoding Usage
 
