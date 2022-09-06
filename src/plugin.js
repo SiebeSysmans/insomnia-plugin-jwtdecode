@@ -1,4 +1,5 @@
 const base64 = require('base-64')
+const jsonPath = require('jsonpath')
 
 module.exports.templateTags = [{
     name: 'jwtdecode',
@@ -19,7 +20,7 @@ module.exports.templateTags = [{
             ]
         },
         {
-            displayName: 'Claim',
+            displayName: 'Claim (JSONPath or XPath)',
             type: 'string'
         },
     ],
@@ -34,33 +35,42 @@ module.exports.templateTags = [{
         } else if(part === 'signature') {
             throw new Error(`Decoding JWT signature is not supported`)
         } else {
-            throw new Error(`Unknow JWT part: ${part}`)
+            throw new Error(`Unknown JWT part: ${part}`)
         }
-        
+
     }
 }];
 
 function decode(jwtPart, claim) {
     let base64DecodedPart
-    let jsonParsedPart
     let claimResult
 
     try {
         base64DecodedPart = base64.decode(jwtPart);
     } catch (error) {
-        throw new Error(`JWT cannot be decoded (Base64 error): ${error.message}`)
+        throw new Error(`JWT cannot be decoded (Base64 error): ${error.message}`);
     }
 
     try {
-        jsonParsedPart = JSON.parse(base64DecodedPart);
+        claimResult = JSON.parse(base64DecodedPart);
     } catch (error) {
-        throw new Error(`JWT cannot be decoded (JSON error): ${error.message}`)
+        throw new Error(`JWT cannot be decoded (JSON error): ${error.message}`);
     }
 
-    claimResult = jsonParsedPart[claim]
+    if (claim.length > 0) {
+        try {
+            claimResult = jsonPath.query(claimResult, claim)[0];
+        } catch (error) {
+          throw new Error(`Cannot parse JWT claim (JSON error): ${error.message}`);
+        }
+    }
 
     if(claimResult === undefined && claim.length > 0) {
-        throw new Error(`Claim not found in JWT: ${claim}`)
+        throw new Error(`Claim not found in JWT: ${claim}`);
+    }
+
+    if (typeof claimResult === 'object' && claimResult !== null) {
+      claimResult = JSON.stringify(claimResult);
     }
 
     return claimResult
