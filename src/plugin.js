@@ -20,7 +20,7 @@ module.exports.templateTags = [{
             ]
         },
         {
-            displayName: 'Claim (JSONPath or XPath)',
+            displayName: 'Claim (JSONPath)',
             type: 'string'
         },
     ],
