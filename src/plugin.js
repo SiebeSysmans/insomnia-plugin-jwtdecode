@@ -37,33 +37,33 @@ module.exports.templateTags = [{
         }
 
     }
-}];
+}]
 
-function decode(jwtPart, options, claim) {
-    let jsonParsedPart;
-    let claimResult;
+function decode(jwt, options, claim) {
+    let decoded
+    let result
 
     try {
-        jsonParsedPart = jwtDecode(jwtPart, options);
+        decoded = jwtDecode(jwt, options)
     } catch (error) {
-        throw new Error(`JWT cannot be decoded (JSON error): ${error.message}`);
+        throw new Error(`JWT cannot be decoded (JSON error): ${error.message}`)
     }
 
     if (claim.length > 0) {
         try {
-            claimResult = jsonPath.query(claimResult, claim)[0];
+            result = jsonPath.query(decoded, claim)[0]
         } catch (error) {
-          throw new Error(`Cannot parse JWT claim (JSON error): ${error.message}`);
+          throw new Error(`Cannot parse JWT claim (JSON error): ${error.message}`)
         }
     }
 
-    if(claimResult === undefined && claim.length > 0) {
-        throw new Error(`Claim not found in JWT: ${claim}`);
+    if(result === undefined && claim.length > 0) {
+        throw new Error(`Claim not found in JWT: ${claim}`)
     }
 
-    if (typeof claimResult === 'object' && claimResult !== null) {
-      claimResult = JSON.stringify(claimResult);
+    if (typeof result === 'object' && result !== null) {
+      result = JSON.stringify(result)
     }
 
-    return claimResult
+    return result
 }
