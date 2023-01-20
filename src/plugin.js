@@ -40,18 +40,17 @@ module.exports.templateTags = [{
 }]
 
 function decode(jwt, options, claim) {
-    let decoded
     let result
 
     try {
-        decoded = jwtDecode(jwt, options)
+        result = jwtDecode(jwt, options)
     } catch (error) {
         throw new Error(`JWT cannot be decoded (JSON error): ${error.message}`)
     }
 
     if (claim.length > 0) {
         try {
-            result = jsonPath.query(decoded, claim)[0]
+            result = jsonPath.query(result, claim)[0]
         } catch (error) {
           throw new Error(`Cannot parse JWT claim (JSON error): ${error.message}`)
         }
