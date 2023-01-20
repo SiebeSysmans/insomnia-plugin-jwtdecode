@@ -1,5 +1,5 @@
 {
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"name": "insomnia-plugin-jwtdecode",
 	"description": "JWT (JSON Web Token) decoder for Insomnia REST Client",
 	"author": "Siebe Sysmans",
@@ -7,7 +7,11 @@
 	"main": "./src/plugin.js",
 	"insomnia": {
 		"name": "jwtdecode",
-		"description": "Decode a JWT (JSON Web Token) and return a claim"
+		"displayName": "JWT Decode",
+		"description": "Decode a JWT (JSON Web Token) and return a claim",
+		"images": {
+			"icon": "assets/icon/icon.svg"
+		}
 	},
 	"repository" :{
 		"type": "git",
@@ -16,5 +20,6 @@
 	"dependencies": {
 		"jsonpath": "1.1.1",
 		"jwt-decode": "3.1.2"
-	}
+	},
+	"unlisted": false
 }
